@@ -276,7 +276,7 @@ export async function searchCatalog(
         page_token: filters?.pageToken,
       });
     });
-    const products = (page.data ?? []).map(mapChannel3Product);
+    const products = (page.data ?? []).map((product) => mapChannel3Product(product));
     return {
       products,
       source: "channel3",
@@ -336,7 +336,7 @@ export async function searchByImageBase64(base64: string): Promise<{
       limit: 24,
     });
     return {
-      products: (page.data ?? []).map(mapChannel3Product),
+      products: (page.data ?? []).map((product) => mapChannel3Product(product)),
       source: "channel3",
     };
   } catch (error) {
@@ -528,7 +528,7 @@ export async function browseCategory(
     });
 
     return {
-      products: (page.data ?? []).map(mapChannel3Product),
+      products: (page.data ?? []).map((product) => mapChannel3Product(product)),
       source: "channel3",
       nextPageToken: page.response?.next_page_token ?? null,
       title: resolved.title,
@@ -602,7 +602,7 @@ export async function browseBrand(
     });
 
     return {
-      products: (page.data ?? []).map(mapChannel3Product),
+      products: (page.data ?? []).map((product) => mapChannel3Product(product)),
       source: "channel3",
       nextPageToken: page.response?.next_page_token ?? null,
       title: brand.name,
@@ -648,7 +648,7 @@ export async function findSimilarProducts(
     );
     return {
       products: (page.data ?? [])
-        .map(mapChannel3Product)
+        .map((product) => mapChannel3Product(product))
         .filter((p) => p.id !== productId)
         .slice(0, limit),
       source: "channel3",
